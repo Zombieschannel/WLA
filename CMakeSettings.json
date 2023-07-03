@@ -59,7 +59,7 @@
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "linux_x64" ],
-      "wslPath": "C:\\Users\\cutel\\AppData\\Local\\Microsoft\\WindowsApps\\ubuntu.exe",
+      "wslPath": "${defaultWSLPath}",
       "variables": [
         {
           "name": "CMAKE_BUILD_TYPE",

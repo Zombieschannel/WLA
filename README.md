@@ -5,6 +5,8 @@ Project template for Windows, Linux, and Android.
 
 Compilation for Windows and Linux can be done with Visual Studio.
 
+Linux compilation is done with WSL in Visual Studio.
+
 Compilation for Android can be done with Android Studio.
 
 ## Setup
@@ -13,7 +15,7 @@ All external assets (images, audio, fonts) must be placed inside the `assets/` f
 
 The `src/` folder is used for `.cpp`, `.h`, and optionally `.rc` files. 
 
-The `SFML/` directory should have `bin/`, `include/`, and `lib` folders inside for Windows/Linux.
+The `SFML/` directory should have `bin/`, `include/`, and `lib` folders inside for Windows compilation.
 
 The `versions/` folder is ignored by Git and can be used for saving previous releases.
 
