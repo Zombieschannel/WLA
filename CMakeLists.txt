@@ -1,4 +1,4 @@
-﻿cmake_minimum_required (VERSION 3.19)
+cmake_minimum_required (VERSION 3.19)
 project (Project)
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -29,6 +29,16 @@ endif()
 
 #FILES
 file(GLOB_RECURSE Project_SOURCES "src/*.cpp")
+if (NOT EXISTS "assets/")
+    file(MAKE_DIRECTORY "assets/")
+endif()
+if (NOT EXISTS "SFML/")
+    file(MAKE_DIRECTORY "SFML/")
+endif()
+if (NOT EXISTS "versions/")
+    file(MAKE_DIRECTORY "versions/")
+endif()
+
 if (NOT ANDROID)
     file(COPY "assets/" DESTINATION "${CMAKE_BINARY_DIR}")
     if (WINDOWS)
