@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Chain Reaction</string>
+    <string name="app_name">SFML-App</string>
     <string name="sfml_activity_x">sfml-activity-d</string>
 </resources>
