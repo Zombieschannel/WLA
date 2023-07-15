@@ -62,7 +62,7 @@ android {
     buildToolsVersion '33.0.0'
     ndkVersion '25.1.8937393'
     compileSdk 33
-    namespace 'com.ChainReaction'
+    namespace 'com.Username.App'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
