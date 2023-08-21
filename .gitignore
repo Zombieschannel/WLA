@@ -10,7 +10,6 @@
 *.userosscache
 *.sln.docstates
 *.zip
-Chain*
 .cxx/
 .gradle/
 .idea/
