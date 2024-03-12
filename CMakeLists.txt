@@ -46,12 +46,6 @@ if (NOT ANDROID)
     endif()
 endif()
 
-#OPTIMIZATION FLAGS
-if (NOT ANDROID)
-    set(CMAKE_CXX_FLAGS_RELEASE "-O2")
-endif()
-
-
 if (WINDOWS)
     #enable_language("RC")
     #set (WIN32_RESOURCES "src/icon.rc")
