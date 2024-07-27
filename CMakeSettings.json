@@ -1,7 +1,7 @@
 ﻿{
   "configurations": [
     {
-      "name": "Windows-x86-Debug",
+      "name": "D-Windows-x86-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
@@ -20,8 +20,8 @@
           "type": "BOOL"
         },
         {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Debug",
+          "name": "BUILD_ARCH",
+          "value": "x86",
           "type": "STRING"
         }
       ]
@@ -42,6 +42,11 @@
           "type": "BOOL"
         },
         {
+          "name": "BUILD_ARCH",
+          "value": "x86",
+          "type": "STRING"
+        },
+        {
           "name": "WARNINGS_AS_ERRORS",
           "value": "False",
           "type": "BOOL"
@@ -49,7 +54,133 @@
       ]
     },
     {
-      "name": "Linux-x64",
+      "name": "Windows-x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": [
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_ARCH",
+          "value": "x64",
+          "type": "STRING"
+        },
+        {
+          "name": "WARNINGS_AS_ERRORS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "Windows-x64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": [
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_ARCH",
+          "value": "x64",
+          "type": "STRING"
+        },
+        {
+          "name": "WARNINGS_AS_ERRORS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "Windows-ARM64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_arm64_x64" ],
+      "variables": [
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_ARCH",
+          "value": "ARM64",
+          "type": "STRING"
+        },
+        {
+          "name": "WARNINGS_AS_ERRORS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "Windows-ARM64-Release",
+      "generator": "Ninja",
+      "configurationType": "Release",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_arm64_x64" ],
+      "variables": [
+        {
+          "name": "BUILD_SHARED_LIBS",
+          "value": "False",
+          "type": "BOOL"
+        },
+        {
+          "name": "BUILD_ARCH",
+          "value": "ARM64",
+          "type": "STRING"
+        },
+        {
+          "name": "WARNINGS_AS_ERRORS",
+          "value": "False",
+          "type": "BOOL"
+        }
+      ]
+    },
+    {
+      "name": "Linux-x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeExecutable": "cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "linux_x64" ],
+      "wslPath": "${defaultWSLPath}",
+      "variables": [
+        {
+          "name": "BUILD_ARCH",
+          "value": "x64",
+          "type": "STRING"
+        }
+      ]
+    },
+    {
+      "name": "Linux-x64-Release",
       "generator": "Ninja",
       "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
@@ -62,8 +193,8 @@
       "wslPath": "${defaultWSLPath}",
       "variables": [
         {
-          "name": "CMAKE_BUILD_TYPE",
-          "value": "Release",
+          "name": "BUILD_ARCH",
+          "value": "x64",
           "type": "STRING"
         }
       ]

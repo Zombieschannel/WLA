@@ -1,5 +1,5 @@
 # WLA
-Windows-Linux-Android project
+Windows-Linux-Android SFML project
 
 Project template for Windows, Linux, and Android.
 
@@ -15,7 +15,7 @@ All external assets (images, audio, fonts) must be placed inside the `assets/` f
 
 The `src/` folder is used for `.cpp`, `.h`, and optionally `.rc` files. 
 
-The `SFML/` directory should have `bin/`, `include/`, and `lib` folders inside for Windows compilation.
+You'll need to specify your SFML directories for each architecture in CMakeLists.txt
 
 The `versions/` folder is ignored by Git and can be used for saving previous releases.
 
