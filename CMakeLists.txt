@@ -9,27 +9,16 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
     set(ANDROID TRUE)
 endif()
 
-#os specific
-if (WINDOWS OR ANDROID)
-    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(SFML_DEBUG TRUE)
-    else()
-        set(SFML_DEBUG FALSE)
-    endif()
-elseif(LINUX)
-    set(SFML_DEBUG FALSE)
-endif()
-
 #SFML SHARED LIBRARY
 if (WINDOWS)
-    set(SFML_SHARED FALSE)
+    set(SFML_STATIC_LIBRARIES TRUE)
 else(LINUX OR ANDROID)
-    set(SFML_SHARED TRUE)
+    set(SFML_STATIC_LIBRARIES FALSE)
 endif()
 
-###########################################
-# SET YOUR SFML DIR FOR EACH ARCHITECTURE #
-###########################################
+######################################################
+# SET YOUR SFML DIR FOR EACH ARCHITECTURE ON DESKTOP #
+######################################################
 if (WINDOWS)
     if (${BUILD_ARCH} STREQUAL "x86")
         set(SFML_LOC "<insert>/SFML-2.6.1-x86")
@@ -39,18 +28,13 @@ if (WINDOWS)
         set(SFML_LOC "<insert>/SFML-2.6.1-ARM64")
     endif()
 elseif(LINUX)
-    if(${BUILD_ARCH} STREQUAL "x64")
-        set(SFML_LOC "<insert>/SFML-2.6.1")
-    endif()
+    set(SFML_LOC "<insert>/SFML-2.6.1")
 endif()
 
 #FILES
 file(GLOB_RECURSE Project_SOURCES "src/*.cpp")
 if (NOT EXISTS "assets/")
     file(MAKE_DIRECTORY "assets/")
-endif()
-if (NOT EXISTS "SFML/")
-    file(MAKE_DIRECTORY "SFML/")
 endif()
 if (NOT EXISTS "versions/")
     file(MAKE_DIRECTORY "versions/")
@@ -64,119 +48,69 @@ if (NOT ANDROID)
 endif()
 
 if (WINDOWS)
+
     #enable_language("RC") #uncoment if using icons
     #set (WIN32_RESOURCES "src/icon.rc")
+
+    set(SFML_DIR "${SFML_LOC}/lib/cmake/SFML")
+    find_package(SFML 2.6 COMPONENTS graphics audio window system network REQUIRED)
+
     add_executable (${CMAKE_PROJECT_NAME} ${Project_SOURCES} #[[${WIN32_RESOURCES}]])
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE")
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
-    target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${SFML_LOC}/include/)
-    target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE ${SFML_LOC}/lib/)
+
 elseif(LINUX)
+    
+    set(SFML_DIR "${SFML_LOC}/lib/cmake/SFML")
+    find_package(SFML 2.6 COMPONENTS graphics audio window system network REQUIRED)
     add_executable (${CMAKE_PROJECT_NAME} ${Project_SOURCES})
-    target_include_directories(${PROJECT_NAME} PRIVATE "${SFML_LOC}/include")
-    target_link_directories(${PROJECT_NAME} PRIVATE "${SFML_LOC}/lib")
+
 elseif(ANDROID)
+
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -u ANativeActivity_onCreate")
     set(CMAKE_MAP_IMPORTED_CONFIG_RELWITHDEBINFO RELEASE)
     set(PATH_TO_SFML ${ANDROID_NDK}/sources/third_party/sfml)
     set(SFML_DIR ${PATH_TO_SFML}/lib/${ANDROID_ABI}/cmake/SFML)
-    find_package(SFML 2 COMPONENTS system)
+    find_package(SFML 2.6 COMPONENTS graphics audio window system network REQUIRED)
 
     add_library(${CMAKE_PROJECT_NAME} SHARED ${Project_SOURCES})
 
     add_library(openal SHARED IMPORTED)
     set_target_properties(openal PROPERTIES IMPORTED_LOCATION_RELEASE ${PATH_TO_SFML}/extlibs/lib/${ANDROID_ABI}/libopenal.so)
     set_target_properties(openal PROPERTIES IMPORTED_LOCATION_DEBUG ${PATH_TO_SFML}/extlibs/lib/${ANDROID_ABI}/libopenal.so)
+
 endif()
 
+#C++ version
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 
-#CPP VERSION
-target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_11)
-
-#STATIC MACRO
-if (NOT SFML_SHARED)
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE SFML_STATIC)
+#uncomment if you'd like to check which architecture is active on Windows from the c++ side
+#[[
+if (WINDOWS)
+    if (${BUILD_ARCH} STREQUAL "x86")
+        target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE SFML_X86)
+    elseif(${BUILD_ARCH} STREQUAL "x64")
+        target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE SFML_X64)
+    elseif(${BUILD_ARCH} STREQUAL "ARM64")
+        target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE SFML_ARM64)
+    endif()
 endif()
+]]
 
-
-#sfml specific
-if (SFML_DEBUG AND NOT SFML_SHARED)
-    set (LINK_SFML
-        winmm
-        sfml-system-s-d
-        opengl32
-        gdi32
-        sfml-window-s-d
-        freetype
-        sfml-graphics-s-d
-        openal32
-        flac
-        vorbisenc
-        vorbisfile
-        vorbis
-        ogg
-        sfml-audio-s-d
-        ws2_32
-        sfml-network-s-d
-        )
-elseif(SFML_DEBUG AND SFML_SHARED)
-    set (LINK_SFML
-        sfml-system-d
-        sfml-window-d
-        sfml-graphics-d
-        sfml-audio-d
-        sfml-network-d
-        )
-elseif(NOT SFML_DEBUG AND SFML_SHARED)
-    set (LINK_SFML
-        sfml-system
-        sfml-window
-        sfml-graphics
-        sfml-audio
-        sfml-network
-        )
-elseif(NOT SFML_DEBUG AND NOT SFML_SHARED)
-    set (LINK_SFML
-        winmm
-        sfml-system-s
-        opengl32
-        gdi32
-        sfml-window-s
-        freetype
-        sfml-graphics-s
-        openal32
-        flac
-        vorbisenc
-        vorbisfile
-        vorbis
-        ogg
-        sfml-audio-s
-        ws2_32
-        sfml-network-s
-        )
-endif()
+set (LINK_SFML sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
 if (WINDOWS)
-    if (SFML_DEBUG)
-        target_link_libraries(${CMAKE_PROJECT_NAME} ${LINK_SFML} sfml-main-d)
-    else()
-        target_link_libraries(${CMAKE_PROJECT_NAME} ${LINK_SFML} sfml-main)
-    endif()
+    target_link_libraries(${CMAKE_PROJECT_NAME} ${LINK_SFML} sfml-main)
 elseif(LINUX)
-    target_link_libraries(${CMAKE_PROJECT_NAME} ${LINK_SFML})
+    target_link_libraries(${CMAKE_PROJECT_NAME} ${LINK_SFML} -lGL -lX11)
 elseif(ANDROID)
     target_link_libraries(${CMAKE_PROJECT_NAME}
         log
         android
-        sfml-system
-        sfml-window
-        sfml-graphics
-        sfml-audio
-        sfml-activity
-        sfml-network
+        ${LINK_SFML}
         -Wl,--whole-archive sfml-main -Wl,--no-whole-archive
         openal
         EGL
         GLESv1_CM
-)       
+    )
 endif()

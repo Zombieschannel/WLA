@@ -13,10 +13,7 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:label="SFML-App"
-        tools:targetApi="o"
-        android:isGame="true"
-        android:resizeableActivity="true">
+        android:label="SFML-App">
         <activity
             android:name="android.app.NativeActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -27,9 +24,6 @@
 
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="@string/sfml_activity_x" />
-            <meta-data
-                android:name="sfml.app.lib_name"
                 android:value="Project" />
 
             <intent-filter>
