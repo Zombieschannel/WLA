@@ -1,4 +1,4 @@
-# WLA
+# WLA [[USE WLAMI INSTEAD](https://github.com/Zombieschannel/WLAMI)]
 Windows-Linux-Android SFML project
 
 Project template for Windows, Linux, and Android.
